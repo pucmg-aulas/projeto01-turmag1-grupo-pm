@@ -14,10 +14,6 @@ public class Mesa {
         this.ocupada = false;
     }
 
-    public boolean estaOcupada() {
-        return ocupada;
-    }
-
     public int getNumero() {
         return numero;
     }
