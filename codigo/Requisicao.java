@@ -1,27 +1,40 @@
+import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.time.LocalTime;
 
-public class FilaEspera {
-    private Queue<Cliente> fila;
+public class Restaurante {
+    private Queue<Cliente> filaEspera;
 
-    public FilaEspera() {
-        this.fila = new LinkedList<>();
+    public Restaurante() {
+        this.filaEspera = new LinkedList<>();
     }
 
-    public void adicionarCliente(Cliente cliente) {
-        fila.offer(cliente);
+    public void adicionarClienteNaFila(Cliente cliente) {
+        filaEspera.offer(cliente);
         System.out.println("Cliente " + cliente.getNome() + " adicionado à fila de espera.");
     }
 
-    public Cliente removerCliente() {
-        return fila.poll();
+    public Cliente proximoClienteNaFila() {
+        return filaEspera.poll();
     }
 
-    public boolean filaVazia() {
-        return fila.isEmpty();
+    public boolean filaDeEsperaVazia() {
+        return filaEspera.isEmpty();
     }
 }
+
+public class Cliente {
+    private String nome;
+
+    public Cliente(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+}
+
 
 public class Requisicao {
     private Cliente cliente;
@@ -79,6 +92,6 @@ public class Requisicao {
     }
 
     public boolean verificarDisponibilidade() {
-        return false; 
+        return false;
     }
 }
