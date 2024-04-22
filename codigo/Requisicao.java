@@ -23,7 +23,7 @@ public class Restaurante {
     }
 }
 
-public class Cliente {
+class Cliente {
     private String nome;
 
     public Cliente(String nome) {
@@ -35,8 +35,7 @@ public class Cliente {
     }
 }
 
-
-public class Requisicao {
+ class Requisicao {
     private Cliente cliente;
     private Mesa mesa;
     private LocalTime horaChegada;
