@@ -1,24 +1,20 @@
 import java.time.LocalTime;
 
 public class Requisicao {
-
     private Cliente cliente;
     private Mesa mesa;
     private LocalTime horaChegada;
     private LocalTime horaSaida;
-    private int qntClientes;
+    private int quantidadeClientes;
 
-    // construtor
-    public Requisicao(Cliente cliente, Mesa mesa, LocalTime horaChegada,
-            LocalTime horaSaida, int qntClientes) {
+    public Requisicao(Cliente cliente, Mesa mesa, LocalTime horaChegada, LocalTime horaSaida, int quantidadeClientes) {
         this.cliente = cliente;
         this.mesa = mesa;
         this.horaChegada = horaChegada;
         this.horaSaida = horaSaida;
-        this.qntClientes = qntClientes;
+        this.quantidadeClientes = quantidadeClientes;
     }
 
-    // getters and setters
     public Cliente getCliente() {
         return cliente;
     }
@@ -51,11 +47,15 @@ public class Requisicao {
         this.horaSaida = horaSaida;
     }
 
-    public int getQntClientes() {
-        return qntClientes;
+    public int getQuantidadeClientes() {
+        return quantidadeClientes;
     }
 
-    public void setQntClientes(int qntClientes) {
-        this.qntClientes = qntClientes;
+    public void setQuantidadeClientes(int quantidadeClientes) {
+        this.quantidadeClientes = quantidadeClientes;
+    }
+
+    public boolean verificarDisponibilidade() {
+        return false;
     }
 }
