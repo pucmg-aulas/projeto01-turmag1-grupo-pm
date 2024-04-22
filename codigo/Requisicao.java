@@ -1,4 +1,27 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.time.LocalTime;
+
+public class FilaEspera {
+    private Queue<Cliente> fila;
+
+    public FilaEspera() {
+        this.fila = new LinkedList<>();
+    }
+
+    public void adicionarCliente(Cliente cliente) {
+        fila.offer(cliente);
+        System.out.println("Cliente " + cliente.getNome() + " adicionado à fila de espera.");
+    }
+
+    public Cliente removerCliente() {
+        return fila.poll();
+    }
+
+    public boolean filaVazia() {
+        return fila.isEmpty();
+    }
+}
 
 public class Requisicao {
     private Cliente cliente;
@@ -56,6 +79,6 @@ public class Requisicao {
     }
 
     public boolean verificarDisponibilidade() {
-        return false;
+        return false; 
     }
 }
