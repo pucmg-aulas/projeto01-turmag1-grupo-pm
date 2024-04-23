@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Restaurante {
     private List<Mesa> mesas;
-    private List<Requisicao> filaEspera;
+    private Queue<Cliente> filaEspera;
 
     public Restaurante() {
         this.mesas = new ArrayList<>();
-        this.filaEspera = new ArrayList<>();
+        this.filaEspera = new LinkedList<>();
     }
 
     public void adicionarMesa(Mesa mesa) {
@@ -30,8 +30,17 @@ public class Restaurante {
         return null;
     }
 
-    public void adicionarFilaEspera(Requisicao requisicao) {
-        filaEspera.add(requisicao);
+    public void adicionarClienteNaFila(Cliente cliente) {
+        filaEspera.offer(cliente);
+        System.out.println("Cliente " + cliente.getNome() + " adicionado à fila de espera.");
+    }
+
+    public Cliente proximoClienteNaFila() {
+        return filaEspera.poll();
+    }
+
+    public boolean filaDeEsperaVazia() {
+        return filaEspera.isEmpty();
     }
 
     public static void main(String[] args) {
