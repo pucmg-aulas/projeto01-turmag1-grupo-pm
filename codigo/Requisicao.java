@@ -1,39 +1,5 @@
 import java.time.LocalTime;
 import java.util.LinkedList;
-import java.util.Queue;
-
-public class Restaurante {
-    private Queue<Cliente> filaEspera;
-
-    public Restaurante() {
-        this.filaEspera = new LinkedList<>();
-    }
-
-    public void adicionarClienteNaFila(Cliente cliente) {
-        filaEspera.offer(cliente);
-        System.out.println("Cliente " + cliente.getNome() + " adicionado à fila de espera.");
-    }
-
-    public Cliente proximoClienteNaFila() {
-        return filaEspera.poll();
-    }
-
-    public boolean filaDeEsperaVazia() {
-        return filaEspera.isEmpty();
-    }
-}
-
-class Cliente {
-    private String nome;
-
-    public Cliente(String nome) {
-        this.nome = nome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-}
 
  class Requisicao {
     private Cliente cliente;
