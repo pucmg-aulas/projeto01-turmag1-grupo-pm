@@ -24,6 +24,7 @@ public class Restaurante {
                 mesa.setCliente(cliente);
                 return mesa;
             }
+            
         }
         Requisicao requisicao = new Requisicao(cliente, null, LocalTime.now(), LocalTime.now().plusHours(1), 1);
         filaEspera.add(requisicao);
