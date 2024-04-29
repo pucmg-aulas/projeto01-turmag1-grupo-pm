@@ -15,6 +15,24 @@ public class Restaurante {
         mesas.add(mesa);
     }
 
+   public void ocuparMesa() {
+        if (!ocupada) {
+            ocupada = true;
+            horaEntrada = LocalDateTime.now(); // Registra a hora de entrada
+        } else {
+            System.out.println("A mesa já está ocupada")
+        }
+    }
+
+    public void desocuparMesa() {
+        if (ocupada) {
+            ocupada = false;
+            horaSaida = LocalDateTime.now(); 
+        } else {
+            System.out.println("A mesa já está desocupada")
+        }
+    }
+    
     public Mesa alocarMesa(Cliente cliente) {
         for (Mesa mesa : mesas) {
             if (!mesa.isOcupada()) {
