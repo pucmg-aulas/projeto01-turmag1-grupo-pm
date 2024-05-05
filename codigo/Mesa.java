@@ -1,4 +1,5 @@
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class Mesa {
     private int numero;
@@ -14,8 +15,21 @@ public class Mesa {
         this.ocupada = false;
     }
 
+
+    public Mesa() {
+    }
+
+    public Mesa(int numero, int capacidade, boolean ocupada, LocalTime horaChegada, LocalTime horaSaida, Cliente cliente) {
+        this.numero = numero;
+        this.capacidade = capacidade;
+        this.ocupada = ocupada;
+        this.horaChegada = horaChegada;
+        this.horaSaida = horaSaida;
+        this.cliente = cliente;
+    }
+
     public int getNumero() {
-        return numero;
+        return this.numero;
     }
 
     public void setNumero(int numero) {
@@ -23,15 +37,19 @@ public class Mesa {
     }
 
     public int getCapacidade() {
-        return capacidade;
-}
+        return this.capacidade;
+    }
 
     public void setCapacidade(int capacidade) {
         this.capacidade = capacidade;
     }
 
     public boolean isOcupada() {
-        return ocupada;
+        return this.ocupada;
+    }
+
+    public boolean getOcupada() {
+        return this.ocupada;
     }
 
     public void setOcupada(boolean ocupada) {
@@ -39,7 +57,7 @@ public class Mesa {
     }
 
     public LocalTime getHoraChegada() {
-        return horaChegada;
+        return this.horaChegada;
     }
 
     public void setHoraChegada(LocalTime horaChegada) {
@@ -47,7 +65,7 @@ public class Mesa {
     }
 
     public LocalTime getHoraSaida() {
-        return horaSaida;
+        return this.horaSaida;
     }
 
     public void setHoraSaida(LocalTime horaSaida) {
@@ -55,10 +73,63 @@ public class Mesa {
     }
 
     public Cliente getCliente() {
-        return cliente;
+        return this.cliente;
     }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-}
+
+    public Mesa numero(int numero) {
+        setNumero(numero);
+        return this;
+    }
+
+    public Mesa capacidade(int capacidade) {
+        setCapacidade(capacidade);
+        return this;
+    }
+
+    public Mesa ocupada(boolean ocupada) {
+        setOcupada(ocupada);
+        return this;
+    }
+
+    public Mesa horaChegada(LocalTime horaChegada) {
+        setHoraChegada(horaChegada);
+        return this;
+    }
+
+    public Mesa horaSaida(LocalTime horaSaida) {
+        setHoraSaida(horaSaida);
+        return this;
+    }
+
+    public Mesa cliente(Cliente cliente) {
+        setCliente(cliente);
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+
+        Mesa other = (Mesa) obj;
+
+        return numero == other.numero &&
+               capacidade == other.capacidade &&
+               ocupada == other.ocupada &&
+               Objects.equals(horaChegada, other.horaChegada) &&
+               Objects.equals(horaSaida, other.horaSaida) &&
+               Objects.equals(cliente, other.cliente);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numero, capacidade, ocupada, horaChegada, horaSaida, cliente);
+    }
+
+    }
