@@ -1,0 +1,34 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ClienteTest {
+
+    @Test
+    public void testConstrutorEGetter() {
+        String rg = "123456789";
+        Cliente cliente = new Cliente(rg);
+        assertEquals(rg, cliente.getRg());
+    }
+
+    @Test
+    public void testSetter() {
+        Cliente cliente = new Cliente("123456789");
+        String novoRg = "987654321";
+        cliente.setRg(novoRg);
+        assertEquals(novoRg, cliente.getRg());
+    }
+
+    @Test
+    public void testEquals() {
+        Cliente cliente1 = new Cliente("123456789");
+        Cliente cliente2 = new Cliente("123456789");
+        assertEquals(cliente1, cliente2);
+    }
+
+    @Test
+    public void testHashCode() {
+        Cliente cliente1 = new Cliente("123456789");
+        Cliente cliente2 = new Cliente("123456789");
+        assertEquals(cliente1.hashCode(), cliente2.hashCode());
+    }
+}
