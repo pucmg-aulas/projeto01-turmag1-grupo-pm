@@ -1,0 +1,45 @@
+import org.junit.jupiter.api.Test;
+import java.time.LocalTime;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MesaTest {
+
+    @Test
+    public void testConstrutorComCapacidade() {
+        Mesa mesa = new Mesa(1, 4);
+        assertEquals(1, mesa.getNumero());
+        assertEquals(4, mesa.getCapacidade());
+        assertFalse(mesa.isOcupada());
+        assertNull(mesa.getHoraChegada());
+        assertNull(mesa.getHoraSaida());
+        assertNull(mesa.getCliente());
+    }
+
+    @Test
+    public void testConstrutorCompleto() {
+        LocalTime horaChegada = LocalTime.of(12, 0);
+        LocalTime horaSaida = LocalTime.of(14, 0);
+        Cliente cliente = new Cliente("João");
+        Mesa mesa = new Mesa(2, 6, true, horaChegada, horaSaida, cliente);
+        assertEquals(2, mesa.getNumero());
+        assertEquals(6, mesa.getCapacidade());
+        assertTrue(mesa.isOcupada());
+        assertEquals(horaChegada, mesa.getHoraChegada());
+        assertEquals(horaSaida, mesa.getHoraSaida());
+        assertEquals(cliente, mesa.getCliente());
+    }
+
+    @Test
+    public void testEquals() {
+        Mesa mesa1 = new Mesa(1, 4);
+        Mesa mesa2 = new Mesa(1, 4);
+        assertEquals(mesa1, mesa2);
+    }
+
+    @Test
+    public void testHashCode() {
+        Mesa mesa1 = new Mesa(1, 4);
+        Mesa mesa2 = new Mesa(1, 4);
+        assertEquals(mesa1.hashCode(), mesa2.hashCode());
+    }
+}
