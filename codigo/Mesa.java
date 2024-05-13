@@ -15,11 +15,11 @@ public class Mesa {
         this.ocupada = false;
     }
 
-
     public Mesa() {
     }
 
-    public Mesa(int numero, int capacidade, boolean ocupada, LocalTime horaChegada, LocalTime horaSaida, Cliente cliente) {
+    public Mesa(int numero, int capacidade, boolean ocupada, LocalTime horaChegada, LocalTime horaSaida,
+            Cliente cliente) {
         this.numero = numero;
         this.capacidade = capacidade;
         this.ocupada = ocupada;
@@ -120,11 +120,11 @@ public class Mesa {
         Mesa other = (Mesa) obj;
 
         return numero == other.numero &&
-               capacidade == other.capacidade &&
-               ocupada == other.ocupada &&
-               Objects.equals(horaChegada, other.horaChegada) &&
-               Objects.equals(horaSaida, other.horaSaida) &&
-               Objects.equals(cliente, other.cliente);
+                capacidade == other.capacidade &&
+                ocupada == other.ocupada &&
+                Objects.equals(horaChegada, other.horaChegada) &&
+                Objects.equals(horaSaida, other.horaSaida) &&
+                Objects.equals(cliente, other.cliente);
     }
 
     @Override
@@ -132,4 +132,4 @@ public class Mesa {
         return Objects.hash(numero, capacidade, ocupada, horaChegada, horaSaida, cliente);
     }
 
-    }
+}
