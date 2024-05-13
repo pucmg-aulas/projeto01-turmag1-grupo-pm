@@ -6,7 +6,7 @@ Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
 * Henrique Leite Najar
 * Giovanna Lima Torres Guasch
 * Maria Clara de Oliveira Silva
-* Nome completo do aluno 4
+* Rayssa Pierre da Silva Ramiro
 * Nome completo do aluno 4
 * Renan Mendes Vieira de Carvalho
 
