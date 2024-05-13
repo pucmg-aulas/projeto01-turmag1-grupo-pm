@@ -7,8 +7,8 @@ Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
 * Giovanna Lima Torres Guasch
 * Maria Clara de Oliveira Silva
 * Rayssa Pierre da Silva Ramiro
-* Nome completo do aluno 4
-* Renan Mendes Vieira de Carvalho
+* Débora Campos Sigaud
+
 
 ## Professor responsável 
 
