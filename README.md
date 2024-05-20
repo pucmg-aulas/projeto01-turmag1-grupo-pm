@@ -8,8 +8,6 @@ Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
 * Maria Clara de Oliveira Silva
 * Rayssa Pierre da Silva Ramiro
 * Débora Campos Sigaud
-* Lucas Maia Rocha
-
 
 ## Professor responsável 
 
