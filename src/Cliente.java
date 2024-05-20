@@ -1,3 +1,4 @@
+import java.time.LocalTime;
 
 public class Cliente implements ICliente {
     private String rg;
@@ -26,7 +27,10 @@ public class Cliente implements ICliente {
     }
 
     public void setPedidoAtual(Pedido pedido) {
+        this.pedidoAtual = pedido;
+    }
 
-        throw new UnsupportedOperationException("Unimplemented method 'setPedidoAtual'");
+    public Requisicao fazRequisicao() {
+        return new Requisicao(this, null, LocalTime.now(), null, 1);
     }
 }
