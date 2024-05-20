@@ -26,7 +26,7 @@ public class Cliente implements ICliente {
     }
 
     public void setPedidoAtual(Pedido pedido) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'setPedidoAtual'");
     }
 }

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOperacoes {
     private List<Mesa> mesas;
@@ -51,22 +52,34 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
     }
 
     @Override
-    public Mesa alocarMesa(Cliente cliente) {
+    public Mesa alocarMesa(Cliente cliente, int numeroMesa) {
+        Mesa mesaSelecionada = null;
+    
+        // Encontra a mesa desejada pelo número
         for (Mesa mesa : mesas) {
-            if (!mesa.isOcupada()) {
-                mesa.setOcupada(true);
-                mesa.setHoraChegada(LocalTime.now());
-                mesa.setHoraSaida(LocalTime.now().plusHours(1));
-                mesa.setCliente(cliente);
-                System.out.println("Mesa " + mesa.getNumero() + " alocada para o cliente " + cliente.getRg());
-                return mesa;
+            if (mesa.getNumero() == numeroMesa && !mesa.isOcupada()) {
+                mesaSelecionada = mesa;
+                break;
             }
         }
-        Requisicao requisicao = new Requisicao(cliente, null, LocalTime.now(), LocalTime.now().plusHours(1), 1);
-        filaEspera.add(requisicao);
-        System.out.println("Não há mesas disponíveis. Cliente " + cliente.getRg() + " adicionado à fila de espera.");
-        return null;
+    
+        // Se a mesa foi encontrada e está disponível, aloca o cliente
+        if (mesaSelecionada != null) {
+            mesaSelecionada.setOcupada(true);
+            mesaSelecionada.setHoraChegada(LocalTime.now());
+            mesaSelecionada.setHoraSaida(LocalTime.now().plusHours(1));
+            mesaSelecionada.setCliente(cliente);
+            System.out.println("Mesa " + mesaSelecionada.getNumero() + " alocada para o cliente " + cliente.getRg());
+        } else {
+            // Se a mesa não foi encontrada ou está ocupada, adiciona o cliente à fila de espera
+            Requisicao requisicao = new Requisicao(cliente, null, LocalTime.now(), LocalTime.now().plusHours(1), 1);
+            filaEspera.add(requisicao);
+            System.out.println("Não há mesas disponíveis. Cliente " + cliente.getRg() + " adicionado à fila de espera.");
+        }
+    
+        return mesaSelecionada;
     }
+    
 
     @Override
     public void adicionarClienteNaFila(Cliente cliente) {
@@ -102,7 +115,7 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
             System.out.println("- " + prato);
         }
         System.out.println("Bebidas:");
-        for (String bebida : cardapio.getBebidas()) {
+       for (String bebida : cardapio.getBebidas()) {
             System.out.println("- " + bebida);
         }
     }
@@ -128,18 +141,65 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
             exibirCardapio();
 
             do {
-                System.out.print("Digite 'prato' para adicionar um prato, 'bebida' para adicionar uma bebida ou 'sair' para concluir: ");
+                System.out.println("""
+                    \n  ***************MENU*******************************
+                        * 1 - Moqueca de Tilápia                         *
+                        * 2 - Falafel Assado                             *
+                        * 3 - Salada Primavera com Macarrão Konjac       *
+                        * 4 - Escondidinho de Frango                     *
+                        * 5 - Strogonoff                                 *
+                        * 6 - Caçarola de Carne com legumes              *
+                        * 7 - Água                                       *
+                        * 8 - Suco                                       *
+                        * 9 - Refrigerante                               *
+                        * 10 - Cerveja                                   *
+                        * 11 - Taça de Vinho                             *
+                        * 12 - Cancelar Pedido                           *
+                        **************************************************""");
+                System.out.print("Escolha uma opção: ");
                 opcao = scanner.nextLine();
-                if (opcao.equals("prato")) {
-                    System.out.print("Digite o nome do prato: ");
-                    pratos.add(scanner.nextLine());
-                } else if (opcao.equals("bebida")) {
-                    System.out.print("Digite o nome da bebida: ");
-                    bebidas.add(scanner.nextLine());
-                } else if (!opcao.equals("sair")) {
-                    System.out.println("Opção inválida. Tente novamente.");
+                switch (opcao) {
+                    case "1":
+                        pratos.add("Moqueca de Tilápia");
+                        break;
+                    case "2":
+                        pratos.add("Falafel Assado");
+                        break;
+                    case "3":
+                        pratos.add("Salada Primavera com Macarrão Konjac");
+                        break;
+                    case "4":
+                        pratos.add("Escondidinho de Frango");
+                        break;
+                    case "5":
+                        pratos.add("Strogonoff");
+                        break;
+                    case "6":
+                        pratos.add("Caçarola de Carne com legumes");
+                        break;
+                    case "7":
+                        bebidas.add("Água");
+                        break;
+                    case "8":
+                        bebidas.add("Suco");
+                        break;
+                    case "9":
+                        bebidas.add("Refrigerante");
+                        break;
+                    case "10":
+                        bebidas.add("Cerveja");
+                        break;
+                    case "11":
+                        bebidas.add("Taça de Vinho");
+                        break;
+                    case "12":
+                        System.out.println("Pedido cancelado.");
+                        return;
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                        break;
                 }
-            } while (!opcao.equals("sair"));
+            } while (!opcao.equals("12"));
 
             Pedido pedido = new Pedido(pratos, bebidas);
             cliente.setPedidoAtual(pedido);
@@ -150,42 +210,136 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
         System.out.println("Pedido realizado com sucesso.");
     }
 
+
     public static void main(String[] args) {
         Restaurante restaurante = new Restaurante();
-        Scanner scanner = new Scanner(System.in);
+        try (Scanner scanner = new Scanner(System.in)) {
 
-        // Adicionar pratos e bebidas ao cardápio
-        restaurante.cardapio.adicionarPrato("Pizza");
-        restaurante.cardapio.adicionarPrato("Hambúrguer");
-        restaurante.cardapio.adicionarBebida("Coca-Cola");
-        restaurante.cardapio.adicionarBebida("Suco de Laranja");
+            boolean sair = false;
+            while (!sair) {
+                System.out.println("***************MENU*******************************");
+                System.out.println("* 1 - Abrir Requisição                           *");
+                System.out.println("* 2 - Finalizar Requisição                       *");
+                System.out.println("* 3 - Listar requisições na lista de espera      *");
+                System.out.println("* 4 - Listar requisições abertas                 *");
+                System.out.println("* 5 - Adicionar uma nova mesa                    *");
+                System.out.println("* 6 - Listar mesas                               *");
+                System.out.println("* 7 - Fazer pedido                               *");
+                System.out.println("* 8 - Sair                                       *");
+                System.out.println("**************************************************");
 
-        System.out.print("Digite o RG do cliente 1: ");
-        String rgCliente1 = scanner.nextLine();
-        Cliente cliente1 = new Cliente(rgCliente1);
+                System.out.print("Escolha uma opção: ");
+                int escolha = Integer.parseInt(scanner.nextLine());
 
-        System.out.print("Digite o RG do cliente 2: ");
-        String rgCliente2 = scanner.nextLine();
-        Cliente cliente2 = new Cliente(rgCliente2);
+                switch (escolha) {
+                    case 1:
 
-        for (int i = 1; i <= 10; i++) {
-            restaurante.adicionarMesa(new Mesa(i, 4));
-        }
-        
-        Mesa alocadaMesa = restaurante.alocarMesa(cliente1);
-        if (alocadaMesa != null) {
-            System.out.println("Mesa alocada para o cliente " + cliente1.getRg() + ": " + alocadaMesa.getNumero());
-        }
-        
-        restaurante.adicionarClienteNaFila(cliente2);
-        System.out.println("Cliente " + cliente2.getRg() + " adicionado à fila de espera.");
-        
-        restaurante.ocuparMesa(restaurante.mesas.get(0));
-        restaurante.desocuparMesa(restaurante.mesas.get(0));
-        
-        // Cliente 1 faz pedido
-        restaurante.fazerPedido(cliente1);
-        
-        scanner.close();
+                        System.out.println("Abrir Requisição selecionado.");
+                        System.out.print("Digite o RG do cliente: ");
+                        String rgClienteRequisicao = scanner.nextLine();
+                        Cliente clienteRequisicao = new Cliente(rgClienteRequisicao);
+                        restaurante.adicionarRequisicao(new Requisicao(clienteRequisicao, null, LocalTime.now(), null, 1));
+                        System.out.println("Requisição aberta com sucesso.");
+                        break;
+                    case 2:
+
+                        System.out.println("Finalizar Requisição selecionado.");
+                        if (!restaurante.filaDeEsperaVazia()) {
+                            Requisicao proximaRequisicao = restaurante.proximoClienteNaFila();
+                            System.out.println("Requisição finalizada para o cliente: " + proximaRequisicao.getCliente().getRg());
+                        } else {
+                            System.out.println("Não há requisições na lista de espera para finalizar.");
+                        }
+                        break;
+                    case 3:
+
+                        System.out.println("Listar requisições na lista de espera selecionado.");
+                        List<Requisicao> requisicoesNaFila = restaurante.getRequisicoes();
+                        if (requisicoesNaFila.isEmpty()) {
+                            System.out.println("Não há requisições na lista de espera.");
+                        } else {
+                            System.out.println("Requisições na lista de espera:");
+                            for (Requisicao requisicao : requisicoesNaFila) {
+                                System.out.println("- Cliente: " + requisicao.getCliente().getRg() + ", Hora de chegada: " + requisicao.getHoraChegada());
+                            }
+                        }
+                        break;
+                    case 4:
+
+                        System.out.println("Listar requisições abertas selecionado.");
+                        List<Mesa> mesasOcupadas = restaurante.mesas.stream()
+                                .filter(Mesa::isOcupada)
+                                .collect(Collectors.toList());
+                        if (mesasOcupadas.isEmpty()) {
+                            System.out.println("Não há requisições abertas.");
+                        } else {
+                            System.out.println("Requisições abertas:");
+                            for (Mesa mesa : mesasOcupadas) {
+                                System.out.println("- Mesa: " + mesa.getNumero() + ", Cliente: " + mesa.getCliente().getRg());
+                            }
+                        }
+                        break;
+                    case 5:
+
+                        System.out.println("Adicionar uma nova mesa selecionado.");
+                        System.out.print("Digite o número da nova mesa: ");
+                        int numeroNovaMesa = Integer.parseInt(scanner.nextLine());
+                        System.out.print("Digite a capacidade da nova mesa: ");
+                        int capacidadeNovaMesa = Integer.parseInt(scanner.nextLine());
+                        restaurante.adicionarMesa(new Mesa(numeroNovaMesa, capacidadeNovaMesa));
+                        System.out.println("Nova mesa adicionada com sucesso.");
+                        break;
+                    case 6:
+
+                        System.out.println("Listar mesas selecionado.");
+                        if (restaurante.mesas.isEmpty()) {
+                            System.out.println("Não há mesas cadastradas.");
+                        } else {
+                            System.out.println("Mesas disponíveis:");
+                            for (Mesa mesa : restaurante.mesas) {
+                                System.out.println("- Mesa: " + mesa.getNumero() + ", Capacidade: " + mesa.getCapacidade());
+                            }
+                        }
+                        break;
+                        case 7:
+                        System.out.println("Fazer pedido selecionado.");
+                        System.out.print("Digite o RG do cliente: ");
+                        if (scanner.hasNextLine()) {
+                            String rgClientePedido = scanner.nextLine();
+                            Cliente clientePedido = new Cliente(rgClientePedido);
+                            System.out.print("Digite o número da mesa: ");
+                            if (scanner.hasNextLine()) {
+                                int numeroMesa = Integer.parseInt(scanner.nextLine());
+                                restaurante.alocarMesa(clientePedido, numeroMesa);
+                                restaurante.fazerPedido(clientePedido);
+                            } else {
+                                System.out.println("Não há mais entrada disponível para leitura.");
+                            }
+                        } else {
+                            System.out.println("Não há mais entrada disponível para leitura.");
+                        }
+                        break;
+                    case 8:
+
+                        System.out.println("Sair selecionado. Encerrando programa...");
+                        sair = true;
+                        break;
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                        break;
+                }
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
+
+
+    @Override
+    public Mesa alocarMesa(Cliente cliente) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'alocarMesa'");
+    }
+
+}
+
