@@ -1,4 +1,3 @@
-
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -10,17 +9,15 @@ public class Mesa {
     private LocalTime horaSaida;
     private Cliente cliente;
 
+    // Construtor principal
     public Mesa(int numero, int capacidade) {
         this.numero = numero;
         this.capacidade = capacidade;
         this.ocupada = false;
     }
 
-    public Mesa() {
-    }
-
-    public Mesa(int numero, int capacidade, boolean ocupada, LocalTime horaChegada, LocalTime horaSaida,
-            Cliente cliente) {
+    // Construtor completo
+    public Mesa(int numero, int capacidade, boolean ocupada, LocalTime horaChegada, LocalTime horaSaida, Cliente cliente) {
         this.numero = numero;
         this.capacidade = capacidade;
         this.ocupada = ocupada;
@@ -29,6 +26,7 @@ public class Mesa {
         this.cliente = cliente;
     }
 
+    // Getters e setters
     public int getNumero() {
         return this.numero;
     }
@@ -46,10 +44,6 @@ public class Mesa {
     }
 
     public boolean isOcupada() {
-        return this.ocupada;
-    }
-
-    public boolean getOcupada() {
         return this.ocupada;
     }
 
@@ -81,6 +75,7 @@ public class Mesa {
         this.cliente = cliente;
     }
 
+    // Métodos de conveniência para uso fluente
     public Mesa numero(int numero) {
         setNumero(numero);
         return this;
@@ -111,15 +106,14 @@ public class Mesa {
         return this;
     }
 
+    // Sobrescrita dos métodos equals e hashCode
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null || getClass() != obj.getClass())
             return false;
-
         Mesa other = (Mesa) obj;
-
         return numero == other.numero &&
                 capacidade == other.capacidade &&
                 ocupada == other.ocupada &&
@@ -132,5 +126,4 @@ public class Mesa {
     public int hashCode() {
         return Objects.hash(numero, capacidade, ocupada, horaChegada, horaSaida, cliente);
     }
-
 }
