@@ -2,6 +2,8 @@ package tests;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 public class ClienteTest {
 
@@ -320,5 +322,70 @@ public class RestauranteTest {
     public void testFilaDeEsperaVazia() {
         Restaurante restaurante = new Restaurante();
         assertTrue(restaurante.filaDeEsperaVazia());
+    }
+}
+
+class PedidoTest {
+
+    @Test
+    void testConstructorWithIdAndDescricao() {
+        List<String> pratos = Arrays.asList("Prato1", "Prato2");
+        List<String> bebidas = Arrays.asList("Bebida1", "Bebida2");
+        Pedido pedido = new Pedido(1, "Pedido de Teste", pratos, bebidas);
+
+        assertEquals(1, pedido.getId());
+        assertEquals("Pedido de Teste", pedido.getDescricao());
+        assertEquals(pratos, pedido.getPratos());
+        assertEquals(bebidas, pedido.getBebidas());
+    }
+
+    @Test
+    void testConstructorWithoutIdAndDescricao() {
+        List<String> pratos = Arrays.asList("Prato1", "Prato2");
+        List<String> bebidas = Arrays.asList("Bebida1", "Bebida2");
+        Pedido pedido = new Pedido(pratos, bebidas);
+
+        assertEquals(pratos, pedido.getPratos());
+        assertEquals(bebidas, pedido.getBebidas());
+    }
+
+    @Test
+    void testSettersAndGetters() {
+        Pedido pedido = new Pedido(0, null, null, null);
+        pedido.setId(2);
+        pedido.setDescricao("Novo Pedido");
+        List<String> pratos = Arrays.asList("Prato3", "Prato4");
+        List<String> bebidas = Arrays.asList("Bebida3", "Bebida4");
+        pedido.setPratos(pratos);
+        pedido.setBebidas(bebidas);
+
+        assertEquals(2, pedido.getId());
+        assertEquals("Novo Pedido", pedido.getDescricao());
+        assertEquals(pratos, pedido.getPratos());
+        assertEquals(bebidas, pedido.getBebidas());
+    }
+
+    @Test
+    void testEqualsAndHashCode() {
+        List<String> pratos1 = Arrays.asList("Prato1", "Prato2");
+        List<String> bebidas1 = Arrays.asList("Bebida1", "Bebida2");
+        Pedido pedido1 = new Pedido(1, "Pedido de Teste", pratos1, bebidas1);
+
+        List<String> pratos2 = Arrays.asList("Prato1", "Prato2");
+        List<String> bebidas2 = Arrays.asList("Bebida1", "Bebida2");
+        Pedido pedido2 = new Pedido(1, "Pedido de Teste", pratos2, bebidas2);
+
+        assertEquals(pedido1, pedido2);
+        assertEquals(pedido1.hashCode(), pedido2.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        List<String> pratos = Arrays.asList("Prato1", "Prato2");
+        List<String> bebidas = Arrays.asList("Bebida1", "Bebida2");
+        Pedido pedido = new Pedido(1, "Pedido de Teste", pratos, bebidas);
+
+        String expected = "Pedido{id=1, descricao='Pedido de Teste', pratos=[Prato1, Prato2], bebidas=[Bebida1, Bebida2]}";
+        assertEquals(expected, pedido.toString());
     }
 }
