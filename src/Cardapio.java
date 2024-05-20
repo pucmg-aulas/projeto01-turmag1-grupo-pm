@@ -1,9 +1,9 @@
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cardapio {
-    private ArrayList<String> pratos;
-    private ArrayList<String> bebidas;
+    private List<String> pratos;
+    private List<String> bebidas;
 
     public Cardapio() {
         this.pratos = new ArrayList<>();
@@ -21,22 +21,26 @@ public class Cardapio {
     }
 
     public void removerPrato(String prato) {
-        pratos.remove(prato);
-        System.out.println("O prato " + prato + " foi removido do cardápio!");
+        if (pratos.remove(prato)) {
+            System.out.println("O prato " + prato + " foi removido do cardápio!");
+        } else {
+            System.out.println("O prato " + prato + " não foi encontrado no cardápio.");
+        }
     }
 
     public void removerBebida(String bebida) {
-        bebidas.remove(bebida);
-        System.out.println("A bebida " + bebida + " foi removida do cardápio!");
+        if (bebidas.remove(bebida)) {
+            System.out.println("A bebida " + bebida + " foi removida do cardápio!");
+        } else {
+            System.out.println("A bebida " + bebida + " não foi encontrada no cardápio.");
+        }
     }
 
-    public String[] getPratos() {
-
-        throw new UnsupportedOperationException("Unimplemented method 'getPratos'");
+    public List<String> getPratos() {
+        return new ArrayList<>(pratos);
     }
 
-    public String[] getBebidas() {
-
-        throw new UnsupportedOperationException("Unimplemented method 'getBebidas'");
+    public List<String> getBebidas() {
+        return new ArrayList<>(bebidas);
     }
 }
