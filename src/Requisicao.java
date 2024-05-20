@@ -1,4 +1,3 @@
-
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -15,10 +14,6 @@ public class Requisicao {
         this.horaChegada = horaChegada;
         this.horaSaida = horaSaida;
         this.quantidadeClientes = quantidadeClientes;
-    }
-
-
-    public Requisicao() {
     }
 
     public Cliente getCliente() {
@@ -61,33 +56,8 @@ public class Requisicao {
         this.quantidadeClientes = quantidadeClientes;
     }
 
-    public Requisicao cliente(Cliente cliente) {
-        setCliente(cliente);
-        return this;
-    }
-
-    public Requisicao mesa(Mesa mesa) {
-        setMesa(mesa);
-        return this;
-    }
-
-    public Requisicao horaChegada(LocalTime horaChegada) {
-        setHoraChegada(horaChegada);
-        return this;
-    }
-
-    public Requisicao horaSaida(LocalTime horaSaida) {
-        setHoraSaida(horaSaida);
-        return this;
-    }
-
-    public Requisicao quantidadeClientes(int quantidadeClientes) {
-        setQuantidadeClientes(quantidadeClientes);
-        return this;
-    }
-
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null || getClass() != obj.getClass())
@@ -103,9 +73,18 @@ public class Requisicao {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(cliente, mesa, horaChegada, horaSaida, quantidadeClientes);
     }
 
-
+    @Override
+    public String toString() {
+        return "Requisicao{" +
+                "cliente=" + cliente +
+                ", mesa=" + mesa +
+                ", horaChegada=" + horaChegada +
+                ", horaSaida=" + horaSaida +
+                ", quantidadeClientes=" + quantidadeClientes +
+                '}';
+    }
 }
