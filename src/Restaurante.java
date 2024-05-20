@@ -11,6 +11,34 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
     private Queue<Requisicao> filaEspera;
     private Cardapio cardapio;
 
+    @Override
+    public Mesa alocarMesa(Cliente cliente) {
+        Mesa mesaSelecionada = null;
+    
+        // Encontra uma mesa disponível
+        for (Mesa mesa : mesas) {
+            if (!mesa.isOcupada()) {
+                mesaSelecionada = mesa;
+                break;
+            }
+        }
+    
+        // Alocar cliente se tiver mesa
+        if (mesaSelecionada != null) {
+            mesaSelecionada.setOcupada(true);
+            mesaSelecionada.setHoraChegada(LocalTime.now());
+            mesaSelecionada.setCliente(cliente);
+            System.out.println("Mesa " + mesaSelecionada.getNumero() + " alocada para o cliente " + cliente.getRg());
+        } else {
+            // Se não encontrou mesa disponível, adiciona o cliente à fila de espera
+            Requisicao requisicao = new Requisicao(cliente, null, LocalTime.now(), null, 1);
+            filaEspera.add(requisicao);
+            System.out.println("Não há mesas disponíveis. Cliente " + cliente.getRg() + " adicionado à fila de espera.");
+        }
+    
+        return mesaSelecionada;
+    }
+
     public Restaurante() {
         this.mesas = new ArrayList<>();
         this.filaEspera = new LinkedList<>();
@@ -54,15 +82,15 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
     @Override
     public Mesa alocarMesa(Cliente cliente, int numeroMesa) {
         Mesa mesaSelecionada = null;
-    
-        // Encontra a mesa desejada pelo número
+
+        // Encontra a mesa pelo número
         for (Mesa mesa : mesas) {
             if (mesa.getNumero() == numeroMesa && !mesa.isOcupada()) {
                 mesaSelecionada = mesa;
                 break;
             }
         }
-    
+
         // Se a mesa foi encontrada e está disponível, aloca o cliente
         if (mesaSelecionada != null) {
             mesaSelecionada.setOcupada(true);
@@ -76,10 +104,9 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
             filaEspera.add(requisicao);
             System.out.println("Não há mesas disponíveis. Cliente " + cliente.getRg() + " adicionado à fila de espera.");
         }
-    
+
         return mesaSelecionada;
     }
-    
 
     @Override
     public void adicionarClienteNaFila(Cliente cliente) {
@@ -115,7 +142,7 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
             System.out.println("- " + prato);
         }
         System.out.println("Bebidas:");
-       for (String bebida : cardapio.getBebidas()) {
+        for (String bebida : cardapio.getBebidas()) {
             System.out.println("- " + bebida);
         }
     }
@@ -203,13 +230,11 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
 
             Pedido pedido = new Pedido(pratos, bebidas);
             cliente.setPedidoAtual(pedido);
+            System.out.println("Pedido realizado com sucesso.");
         } catch (Exception e) {
             System.out.println("Erro ao processar o pedido: " + e.getMessage());
         }
-
-        System.out.println("Pedido realizado com sucesso.");
     }
-
 
     public static void main(String[] args) {
         Restaurante restaurante = new Restaurante();
@@ -233,7 +258,6 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
 
                 switch (escolha) {
                     case 1:
-
                         System.out.println("Abrir Requisição selecionado.");
                         System.out.print("Digite o RG do cliente: ");
                         String rgClienteRequisicao = scanner.nextLine();
@@ -242,7 +266,6 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
                         System.out.println("Requisição aberta com sucesso.");
                         break;
                     case 2:
-
                         System.out.println("Finalizar Requisição selecionado.");
                         if (!restaurante.filaDeEsperaVazia()) {
                             Requisicao proximaRequisicao = restaurante.proximoClienteNaFila();
@@ -252,7 +275,6 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
                         }
                         break;
                     case 3:
-
                         System.out.println("Listar requisições na lista de espera selecionado.");
                         List<Requisicao> requisicoesNaFila = restaurante.getRequisicoes();
                         if (requisicoesNaFila.isEmpty()) {
@@ -265,7 +287,6 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
                         }
                         break;
                     case 4:
-
                         System.out.println("Listar requisições abertas selecionado.");
                         List<Mesa> mesasOcupadas = restaurante.mesas.stream()
                                 .filter(Mesa::isOcupada)
@@ -280,7 +301,6 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
                         }
                         break;
                     case 5:
-
                         System.out.println("Adicionar uma nova mesa selecionado.");
                         System.out.print("Digite o número da nova mesa: ");
                         int numeroNovaMesa = Integer.parseInt(scanner.nextLine());
@@ -290,7 +310,6 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
                         System.out.println("Nova mesa adicionada com sucesso.");
                         break;
                     case 6:
-
                         System.out.println("Listar mesas selecionado.");
                         if (restaurante.mesas.isEmpty()) {
                             System.out.println("Não há mesas cadastradas.");
@@ -301,26 +320,17 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
                             }
                         }
                         break;
-                        case 7:
+                    case 7:
                         System.out.println("Fazer pedido selecionado.");
                         System.out.print("Digite o RG do cliente: ");
-                        if (scanner.hasNextLine()) {
-                            String rgClientePedido = scanner.nextLine();
-                            Cliente clientePedido = new Cliente(rgClientePedido);
-                            System.out.print("Digite o número da mesa: ");
-                            if (scanner.hasNextLine()) {
-                                int numeroMesa = Integer.parseInt(scanner.nextLine());
-                                restaurante.alocarMesa(clientePedido, numeroMesa);
-                                restaurante.fazerPedido(clientePedido);
-                            } else {
-                                System.out.println("Não há mais entrada disponível para leitura.");
-                            }
-                        } else {
-                            System.out.println("Não há mais entrada disponível para leitura.");
-                        }
+                        String rgClientePedido = scanner.nextLine();
+                        Cliente clientePedido = new Cliente(rgClientePedido);
+                        System.out.print("Digite o número da mesa: ");
+                        int numeroMesa = Integer.parseInt(scanner.nextLine());
+                        restaurante.alocarMesa(clientePedido, numeroMesa);
+                        restaurante.fazerPedido(clientePedido);
                         break;
                     case 8:
-
                         System.out.println("Sair selecionado. Encerrando programa...");
                         sair = true;
                         break;
@@ -333,13 +343,4 @@ public class Restaurante implements IRestaurante, MesaOperacoes, FilaEsperaOpera
             e.printStackTrace();
         }
     }
-
-
-    @Override
-    public Mesa alocarMesa(Cliente cliente) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'alocarMesa'");
-    }
-
 }
-
