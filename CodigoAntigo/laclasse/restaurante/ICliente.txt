@@ -1,3 +1,4 @@
+package laclasse.restaurante;
 
 public interface ICliente {
     void fazerPedido(Pedido pedido);
