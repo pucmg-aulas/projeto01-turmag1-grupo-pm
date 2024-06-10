@@ -64,6 +64,7 @@ public class Restaurante implements RestauranteInterface, Serializable {
             }
         }
         filaEspera.add(requisicao);
+        clientes.add(requisicao.getCliente());
     }
 
     @Override
@@ -72,7 +73,6 @@ public class Restaurante implements RestauranteInterface, Serializable {
         if (mesa != null) {
             requisicao.liberarMesa();
         }
-        clientes.remove(requisicao.getCliente());
         if (!filaEspera.isEmpty()) {
             alocarMesa(filaEspera.poll());
         }
