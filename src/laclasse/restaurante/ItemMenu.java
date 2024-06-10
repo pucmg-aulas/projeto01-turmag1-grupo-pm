@@ -31,6 +31,19 @@ public class ItemMenu implements Serializable {
         this.preco = preco;
     }
 
+    public ItemMenu getItemPorNome(String itemNome) {
+    for (ItemMenu prato : this.pratos) {
+        if (prato.getNome().equals(itemNome)) {
+            return prato;
+        }
+    }
+    for (ItemMenu bebida : this.bebidas) {
+        if (bebida.getNome().equals(itemNome)) {
+            return bebida;
+        }
+    }
+    return null; // retorna null se o item não foi encontrado
+}
 
     @Override
     public String toString() {
