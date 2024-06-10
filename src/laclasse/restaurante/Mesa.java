@@ -24,4 +24,27 @@ public class Restaurante {
             this.mesas.add(new Mesa(i + 1, 8));
         }
     }
+    public class Mesa implements Serializable {
+    // Outros campos e métodos...
+
+    private Pedido pedido;
+
+    public void fazerPedido() {
+        this.pedido = new Pedido();
+    }
+
+    public void adicionarItemAoPedido(ItemMenu item, boolean isBebida) {
+        if (isBebida) {
+            this.pedido.adicionarBebida(item);
+        } else {
+            this.pedido.adicionarPrato(item);
+        }
+    }
+
+    public double encerrarPedido() {
+        double total = this.pedido.calcularTotalComServico();
+        this.pedido = null; // Limpa o pedido atual
+        return total;
+    }
+}
 }
