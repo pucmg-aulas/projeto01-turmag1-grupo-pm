@@ -8,6 +8,20 @@ public class Cardapio implements CardapioInterface, Serializable {
     private List<ItemMenu> pratos;
     private List<ItemMenu> bebidas;
 
+    public ItemMenu getItemPorNome(String itemNome) {
+    for (ItemMenu prato : this.pratos) {
+        if (prato.getNome().equals(itemNome)) {
+            return prato;
+        }
+    }
+    for (ItemMenu bebida : this.bebidas) {
+        if (bebida.getNome().equals(itemNome)) {
+            return bebida;
+        }
+    }
+    return null; // retorna null se o item não foi encontrado
+}
+
 
     public Cardapio() {
         this.pratos = new ArrayList<>();
@@ -51,7 +65,6 @@ public class Cardapio implements CardapioInterface, Serializable {
 
 
     public ItemMenu getItemPorNome(String itemNome) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getItemPorNome'");
     }
 }
