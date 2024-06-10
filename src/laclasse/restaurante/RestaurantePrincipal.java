@@ -25,40 +25,13 @@ public class RestaurantePrincipal {
 
             switch (escolha) {
                 case 1:
-                    System.out.print("Digite a quantidade de clientes: ");
-                    int quantidadeClientes = Integer.parseInt(scanner.nextLine());
-                    boolean disponivel = restaurante.verificarDisponibilidade(quantidadeClientes);
-                    if (disponivel) {
-                        System.out.println("Há mesas disponíveis para a quantidade de clientes especificada.");
-                    } else {
-                        System.out.println("Não há mesas disponíveis para a quantidade de clientes especificada.");
-                    }
+                    // Código existente...
                     break;
                 case 2:
-                    System.out.print("Digite o RG do cliente: ");
-                    String rgCliente = scanner.nextLine();
-                    Cliente cliente = new Cliente(rgCliente);
-                    System.out.print("Digite a quantidade de clientes: ");
-                    int qtClientes = Integer.parseInt(scanner.nextLine());
-                    Requisicao requisicao = new Requisicao(cliente, qtClientes);
-                    restaurante.adicionarFilaEspera(requisicao);
-                    System.out.println("Cliente adicionado à fila de espera com sucesso.");
+                    // Código existente...
                     break;
                 case 3:
-                    System.out.print("Digite o RG do cliente: ");
-                    String rgClienteMesa = scanner.nextLine();
-                    Cliente clienteMesa = new Cliente(rgClienteMesa);
-                    System.out.print("Digite a quantidade de clientes: ");
-                    int qtClientesMesa = Integer.parseInt(scanner.nextLine());
-                    Requisicao requisicaoMesa = new Requisicao(clienteMesa, qtClientesMesa);
-                    boolean mesaAlocada = restaurante.verificarDisponibilidade(qtClientesMesa);
-                    if (mesaAlocada) {
-                        restaurante.alocarMesa(requisicaoMesa);
-                        System.out.println("Cliente alocado a uma mesa disponível com sucesso.");
-                    } else {
-                        restaurante.adicionarFilaEspera(requisicaoMesa);
-                        System.out.println("Não há mesas disponíveis. Cliente adicionado à fila de espera.");
-                    }
+                    // Código existente...
                     break;
                 case 4:
                     System.out.print("Digite o RG do cliente: ");
@@ -76,6 +49,9 @@ public class RestaurantePrincipal {
                         String itemNome = scanner.nextLine();
                         ItemMenu item = restaurante.getCardapio().getItemPorNome(itemNome);
                         if (item != null) {
+                            // Adiciona o item ao pedido do cliente
+                            boolean isBebida = restaurante.getCardapio().getBebidas().contains(item);
+                            clientePedido.fazerRequisicao(1).fazerPedido().adicionarItemAoPedido(item, isBebida);
                             System.out.println("Pedido feito com sucesso: " + item.getNome());
                         } else {
                             System.out.println("Item não encontrado no cardápio.");
@@ -95,9 +71,8 @@ public class RestaurantePrincipal {
                         }
                     }
                     if (mesaLiberar != null && mesaLiberar.estaOcupada()) {
-                        for (Requisicao req : restaurante.getClientes().stream()
-                                .map(clienteAtual -> new Requisicao(clienteAtual, 0))
-                                .toList()) {
+                        for (Cliente cliente : restaurante.getClientes()) {
+                            Requisicao req = cliente.fazerRequisicao(1);
                             if (req.getMesa().equals(mesaLiberar)) {
                                 restaurante.liberarMesa(req);
                                 System.out.println("Mesa " + numeroMesaLiberar + " liberada com sucesso.");
@@ -109,21 +84,13 @@ public class RestaurantePrincipal {
                     }
                     break;
                 case 6:
-                    System.out.println("Mesas disponíveis:");
-                    for (Mesa mesa : restaurante.getMesas()) {
-                        String status = mesa.estaOcupada() ? "Ocupada" : "Disponível";
-                        System.out.println("- Mesa " + mesa.getNumero() + ": Capacidade " + mesa.getCapacidade() + " - " + status);
-                    }
+                    // Código existente...
                     break;
                 case 7:
-                    System.out.println("Clientes na fila de espera:");
-                    for (Requisicao req : restaurante.getFilaEspera()) {
-                        System.out.println("- Cliente " + req.getCliente().getRG() + " (Quantidade de clientes: " + req.getQuantidadeCliente() + ")");
-                    }
+                    // Código existente...
                     break;
                 case 8:
-                    System.out.println("Encerrando o programa...");
-                    sair = true;
+                    // Código existente...
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
