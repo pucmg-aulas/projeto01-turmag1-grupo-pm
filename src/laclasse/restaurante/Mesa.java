@@ -24,8 +24,16 @@ public class Restaurante {
             this.mesas.add(new Mesa(i + 1, 8));
         }
     }
-    public class Mesa implements Serializable {
-    // Outros campos e métodos...
+
+    
+}
+Arquivo Mesa.java:
+
+package laclasse.restaurante;
+
+import java.io.Serializable;
+
+public class Mesa implements Serializable {
 
     private Pedido pedido;
 
@@ -43,8 +51,7 @@ public class Restaurante {
 
     public double encerrarPedido() {
         double total = this.pedido.calcularTotalComServico();
-        this.pedido = null; // Limpa o pedido atual
+        this.pedido = null;
         return total;
     }
-}
 }
