@@ -1,35 +1,27 @@
 package laclasse.restaurante;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Mesa implements Serializable {
-    private int numero;
-    private int capacidade;
-    private boolean estaOcupada;
+public class Restaurante {
+    private List<Mesa> mesas;
 
-    public Mesa(int numero, int capacidade) {
-        this.numero = numero;
-        this.capacidade = capacidade;
-        this.estaOcupada = false;
-    }
+    public Restaurante() {
+        this.mesas = new ArrayList<>();
 
-    public int getNumero() {
-        return this.numero;
-    }
+        // Adiciona 4 mesas com capacidade para 4 pessoas
+        for (int i = 0; i < 4; i++) {
+            this.mesas.add(new Mesa(i + 1, 4));
+        }
 
-    public int getCapacidade() {
-        return this.capacidade;
-    }
+        // Adiciona 4 mesas com capacidade para 6 pessoas
+        for (int i = 4; i < 8; i++) {
+            this.mesas.add(new Mesa(i + 1, 6));
+        }
 
-    public boolean estaOcupada() {
-        return this.estaOcupada;
-    }
-
-    public void ocuparMesa() {
-        this.estaOcupada = true;
-    }
-
-    public void desocuparMesa() {
-        this.estaOcupada = false;
+        // Adiciona 2 mesas com capacidade para 8 pessoas
+        for (int i = 8; i < 10; i++) {
+            this.mesas.add(new Mesa(i + 1, 8));
+        }
     }
 }
