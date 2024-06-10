@@ -18,18 +18,18 @@ public class Requisicao implements Serializable {
     }
 
     public Duration calcularTempo() {
-        if (this.horaSaida == null) {
-            this.horaSaida = LocalDateTime.now();
+        if (this.horaSaida != null) {
+            return Duration.between(this.horaChegada, this.horaSaida);
+        } else {
+            return Duration.between(this.horaChegada, LocalDateTime.now());
         }
-        return Duration.between(this.horaChegada, this.horaSaida);
     }
 
-    public void fazerPedido(Pedido pedido) {
+    public double[] fazerPedido(Pedido pedido) {
         double totalComServico = pedido.calcularTotalComServico();
         double totalPorPessoa = pedido.calcularPorPessoa(this.quantidadeCliente);
 
-        System.out.println("Valor total com serviço: " + totalComServico);
-        System.out.println("Valor por pessoa: " + totalPorPessoa);
+        return new double[]{totalComServico, totalPorPessoa};
     }
 
     public void setMesa(Mesa mesa) {
